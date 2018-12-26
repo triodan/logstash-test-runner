@@ -11,10 +11,10 @@ NC='\033[0m' # No Color
 TEST_RESULT_FILE="test_output.log"
 TEST_PARENT_DIRECTORY=$1
 
-if [[ "$2" != "" ]]; then
-    TEST_LOGSTASH_IMAGE=$2
-else
+TEST_LOGSTASH_IMAGE=${2:-}
+if [[ -z "$TEST_LOGSTASH_IMAGE" ]]; then
     TEST_LOGSTASH_IMAGE="docker.elastic.co/logstash/logstash:5.5.1"
+    echo "Logstash image not provided, using default logstash:5.5.1 image"
 fi
 
 declare -A benchmarks
@@ -111,6 +111,8 @@ for d in $TESTS_DIRECTORIES ; do
       EXIT_CODE=1
     fi
 done
+
+echo "TEST DONEEEEEEEEE"
 
 # PRINT RESULTS
 echo ""
